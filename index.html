@@ -5,8 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Assignment 2</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+    <div class="wrapper">
+        <header class="header">
+            <h1>Salary </h1>
+            <form class="employeefrm" name="employee">
+                <ul class="employee">
+                    <li>Employee Number</li>
+                    <li>Name</li>
+                    <li>Department</li>
+                    <li>Hours</li>
+                    <li>Month</li>
+                    <li>Code Type</li>
+                </ul>
+                <ul class="employee">
+                    <li><input type="text" id="numberTxt"></li>
+                    <li><input type="text" id="nameTxt"></li>
+                    <li><input type="text" id="departmentTxt"></li>
+                    <li><input type="text" id="hoursTxt"></li>
+                    <li><select name="month" id="monthSlct">
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        </select></li>
+                    <!-- <li><input type="radio" name="faculty" id="typeRdo" value="0"><label>Faculty</label><input type="radio" name="regular" id="typeRdo" value="1"><label>Regular</label></li> -->
+                    <li><fieldset>
+                        <label class="option">
+                            <input type="radio" name="radioOnOrOff" value="0" id="regularRdo" class="radio" checked>
+                            <label for="regularRdo" class="radio-btn">Regular</label>
+                        </label>                  
+                        <label class="option">
+                          <input type="radio" name="radioOnOrOff" value="1" id="facultyRdo" class="radio"> 
+                          <span class="radio-btn">Faculty</span>
+                        </label>
+                      </fieldset></li>
+                      <li><fieldset id="magBacFld"></fieldset></li>
+                </ul>
+                <input type="button" value="Calculate" id="calcBtn">
+                <input type="reset" value="Clear">
+            </form>
+        </header>
+        <main>
+            <article id="resultArt">
+
+            </article>
+
+        </main>
+        <footer>
+
+        </footer>
+    </div>
     <script src="js/index.js"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+.employeefrm{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: left;
+  justify-items: left;
+}
+
+.employee{
+  list-style: none;
+}
+
+.radio-btn {
+  /* display: inline-block;
+  font: 1.25em georgia, serif;
+  background-color: darkslateblue;
+  color: white;
+  padding: 0.25em 0.5em;
+  border-radius: 0.125em;
+  text-shadow: 1px 1px black;
+  box-shadow: 0.125em 0.125em 0 slateblue; */
+  list-style: none;
+}
+.radio:checked + .radio-btn {
+  /* box-shadow: none;
+  background-color: slateblue;
+  text-shadow: none;
+  border: 2px solid black; */
+}
