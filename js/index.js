@@ -3,9 +3,9 @@
 // let result = document.getElementById(`resultArt`);
 let magisterBachelor = document.getElementById(`magBacFld`);
 // let number = document.getElementById(`numberTxt`).value;
-let name = document.getElementById(`nameTxt`).value;
-let department = document.getElementById(`departmentTxt`).value;
-let hours = document.getElementById(`hoursTxt`).value;
+//let name = document.getElementById(`nameTxt`).value;
+//let department = document.getElementById(`departmentTxt`).value;
+//let hours = document.getElementById(`hoursTxt`).value;
 // let month = document.getElementById(`monthSlct`).value;
 // let type = document.getElementById(`typeRdo`).value;
 let calculate = document.getElementById(`calcBtn`);
@@ -16,12 +16,24 @@ let bachelor = document.getElementById(`bachelorRdo`);
 
 
 // FUNCTION
+function isRegularFacultyChecked(){
+  let regular = document.getElementById(`regularRdo`);
+  let faculty = document.getElementById(`facultyRdo`);
+
+  if (regular.checked == true){
+    console.log(`Regular is checked`);
+  }else{
+    console.log(`Faculty is checked`);
+  }
+}
+
 
 
 const domRadios = document.querySelectorAll('[name="radioOnOrOff"]')
 domRadios.forEach(radioBtn => {
   radioBtn.addEventListener('change', event => {
-    console.log(event.target.value);
+    
+    // console.log(event.target.value);
     if (event.target.value == "1") {
       renderMagisterBachelorRadio();
     } else {
@@ -48,7 +60,7 @@ function renderMagisterBachelorRadio(){
   magisterBachelor.innerHTML =
     `<li>
   <label class="option">
-      <input type="radio" name="radioOnOrOff1" value="0" id="bachelorRdo" class="radio" checked>
+      <input type="radio" name="radioOnOrOff1" value="0" id="bachelorRdo" class="radio">
       <label for="bachelorRdo" class="radio-btn">Bachelor</label>
   </label>                  
   <label class="option">
@@ -61,28 +73,37 @@ function renderMagisterBachelorRadio(){
     radioBtn.addEventListener('change', event => {
       console.log(event.target.value);
       if (event.target.value == "0") {
-        // document.querySelector('body').style.backgroundColor = '#111';
+      alert(`Bachelor is checked`);
 
       } else {
-        // document.querySelector('body').style.backgroundColor = '#fff';
-        // magisterBachelor.style.display = "none"
-
+  
+        alert(`Magister is checked`);
 
       }
     })
   })
+ 
 }
+
+
 
 function calculateSalary(){
   let result = document.getElementById(`resultArt`);
   let number = document.getElementById(`numberTxt`).value;
+  let name = document.getElementById(`nameTxt`).value;
+  let department = document.getElementById(`departmentTxt`).value;
+  let hours = document.getElementById(`hoursTxt`).value;
+
+
+
   let month = document.getElementById(`monthSlct`).value;
   let regular = document.getElementById(`regularRdo`);
   let faculty = document.getElementById(`facultyRdo`);
   const domRadios = document.querySelectorAll('[name="radioOnOrOff"]');
-  result.innerHTML = `Number ${number} Month${month} Code ${event,target.value}`;
+  result.innerHTML = `Number ${number} Month${month} `;
 
-//result.innerHTML = `Number ${number1} `;
+
+result.innerHTML = `Number :${number} Name :${name} Dept ${department} Hours ${hours} Month :${month}`;
 // document.getElementById(`resultArt`).innerHTML = number;
 
  
