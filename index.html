@@ -10,7 +10,7 @@
 <body>
     <div class="wrapper">
         <header class="header">
-            <h1>Salary </h1>
+            <h1>ABC College Salary Calculation</h1>
             <form class="employeefrm" name="employeeFrm">
                 <ul class="employee">
                     <li>Employee Number</li>
@@ -23,11 +23,18 @@
                 <ul class="employee">
                     <li><input type="text" id="numberTxt"></li>
                     <li><input type="text" id="nameTxt"></li>
-                    <li><input type="text" id="departmentTxt"></li>
+                    <!-- <li><input type="text" id="departmentTxt"></li> -->
+                    <li><select name="department" id="departmentSlct">
+                        <option value="0">Finance Department</option>
+                        <option value="1">IT Department</option>
+                        <option value="3">Finance</option>
+                        <option value="4">Instructor</option>
+                    </select></li>
                     <li><input type="text" id="hoursTxt"></li>
                     <li><select name="month" id="monthSlct">
                         <option value="0">January</option>
                         <option value="1">February</option>
+                        <option value="2">Maret</option>
                         </select></li>
                     <!-- <li><input type="radio" name="faculty" id="typeRdo" value="0"><label>Faculty</label><input type="radio" name="regular" id="typeRdo" value="1"><label>Regular</label></li> -->
                     <li><fieldset>
@@ -40,7 +47,7 @@
                           <span class="radio-btn">Faculty</span>
                         </label>
                       </fieldset></li>
-                      <li><fieldset id="magBacFld"></fieldset></li>
+                      <li id="macBacFld"></li>
                 </ul>
                 <input type="button" value="Calculate" id="calcBtn">
                 <input type="reset" value="Clear">
