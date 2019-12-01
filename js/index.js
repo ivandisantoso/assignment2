@@ -129,6 +129,11 @@ function calculateFacultyBachelorGrossSalary(){
   console.log(facultyBachelorGrossSalary);
 }
 
+function calculateRegularGrossSalary(){
+  let hours = document.getElementById(`hoursTxt`).value;
+  
+}
+
 function calculateTax(){
   let hours = document.getElementById(`hoursTxt`).value;
   let salaryTax = regularGrossSalaryHour-(regularGrossSalaryHour * incomeTax);  
