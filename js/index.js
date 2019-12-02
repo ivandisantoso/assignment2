@@ -38,7 +38,7 @@ function calculateWorkDay(){
   let numberWorkYears = subYearEnd-subYearStart;
   let test1 = new Date(startWork);
   let test2 = new Date(endWork);
-  let test11 = test1.getUTCFullYear();
+  let test11 = test1.ge();
 // console.log(`Working Days ${subYearStart} working days ${subYearEnd}`);
 console.log(`typeof ${test11}`)
   // if (test1>test2){
