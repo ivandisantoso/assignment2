@@ -17,7 +17,7 @@
                     <li>Name</li>
                     <li>Department</li>
                     <li>Hours</li>
-                    <li>Month</li>
+                    <li>Day Start - Day End</li>
                     <li>Code Type</li>
                 </ul>
                 <ul class="employee">
@@ -31,12 +31,8 @@
                         <option value="4">Instructor</option>
                     </select></li>
                     <li><input type="text" id="hoursTxt"></li>
-                    <li><select name="month" id="monthSlct">
-                        <option value="0">January</option>
-                        <option value="1">February</option>
-                        <option value="2">Maret</option>
-                        </select></li>
-                    <!-- <li><input type="radio" name="faculty" id="typeRdo" value="0"><label>Faculty</label><input type="radio" name="regular" id="typeRdo" value="1"><label>Regular</label></li> -->
+                    <li><input type="date" name="workStartDate" id="workStartDate"> - <input type="date" name="workEndDate" id="workEndDate"></li>
+                    
                     <li><fieldset>
                         <label class="option">
                             <input type="radio" name="radioOnOrOff" value="0" id="regularRdo" class="radio" checked>
