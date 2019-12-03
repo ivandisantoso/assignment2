@@ -20,6 +20,9 @@
   const masterAllowance = 1500;
   const bachelorAllowance = 600; 
   const incomeTax = 0.25;
+  const healthFeePoint = 3000;
+  const highHealthSurcharge = 33;
+  const lowHealthSurcharge = 19.20;
 
 
   // FUNCTION
@@ -47,12 +50,15 @@ function calculateWorkDay(){
 
 function isRegularFacultyChecked(){
   let regular = document.getElementById(`regularRdo`);
-  // let faculty = document.getElementById(`facultyRdo`);
+  let faculty = document.getElementById(`facultyRdo`);
 
   if (regular.checked == true){
-    console.log(`Regular is checked `);
+    // console.log(`Regular is checked `);
+    // document.getElementById
+    return regular;
   }else{
     // console.log(`Faculty is checked `);
+    return faculty;
   }
 }
 
@@ -61,7 +67,7 @@ domRadios.forEach(radioBtn => {
   radioBtn.addEventListener('change', event => {
     
     // console.log(event.target.value);
-    if (event.target.value == "1") {
+    if (event.target.value == "Faculty") {
       renderMasterBachelorRadio();
     } else {
       masterBachelor.innerHTML =
@@ -113,31 +119,6 @@ function renderMasterBachelorRadio(){
       }
     })
   })
-
-}
-
-
-function calculateSalary(){
-  let result = document.getElementById(`resultArt`);
-  let number = document.getElementById(`numberTxt`).value;
-  let name = document.getElementById(`nameTxt`).value;
-  let department = document.getElementById(`departmentSlct`).value;
-  // let hours = document.getElementById(`hoursTxt`).value;
-  let month = document.getElementById(`monthSlct`).value;
-  // let regular = document.getElementById(`regularRdo`);
-  // let faculty = document.getElementById(`facultyRdo`);
-
-  isRegularFacultyChecked();
-  // const domRadios = document.querySelectorAll('[name="radioOnOrOff"]');
-
-
-
-result.innerHTML = `Number :${number} Name :${name} Dept :${department} Hours ${hours} Month :${month} `;
-// document.getElementById(`resultArt`).innerHTML = number;
-
-
-//alert(`numb ${number.value}`);
-
 }
 
 function calculateRegularProrated(){
@@ -159,7 +140,12 @@ function calculateRegularSalary(){
   }else { 
     console.log(` Gross Salary double prorated ${doubleProratedRegularGrossSalary.toFixed(2)} Net Salary double prorated ${doubleProratedRegularNetSalary.toFixed(2)}`);
   }
+  return doubleProratedRegularGrossSalary;
 }
+
+// function calculateTax(){
+//   let tax = 
+// }
 
 function calculateFacultyMasterSalary(){
   let hours = document.getElementById(`hoursTxt`).value; 
@@ -174,9 +160,74 @@ function calculateFacultyBachelorSalary(){
   let facultyBachelorGrossSalary = bachelorAllowance + (bachelorSalaryPerHour * hours);
   let facultyBachelorNetSalary = facultyBachelorGrossSalary - (facultyBachelorGrossSalary * incomeTax);
   // console.log(facultyBachelorNetSalary);
-  return facultyBachelorNetSalary;
+  return facultyBachelorNetSalary, facultyBachelorGrossSalary;
 }
 
+function calculateHealthSurcharge(){
+  let doubleProratedRegularGrossSalary = calculateRegularSalary();
+  let facultyBachelorGrossSalary = calculateFacultyBachelorSalary();
+  let facultyMasterGrossSalary = calculateFacultyMasterSalary();
+  // let totalHighHealthSurcharge = highHealthSurcharge + 
+  console.log(`${facultyBachelorGrossSalary}`);
+  // if ((doubleProratedRegularGrossSalary > healthFeePoint) || (facultyBachelorGrossSalary > healthFeePoint) || (facultyMasterGrossSalary > healthFeePoint) ){
+  //   console.log(`Health surcharge fee ${highHealthSurcharge}`);
+  // }
+}
+
+function calculateSalary(){
+  let result = document.getElementById(`resultArt`);
+  let number = document.getElementById(`numberTxt`).value;
+  let name = document.getElementById(`nameTxt`).value;
+  let department = document.getElementById(`departmentSlct`).value;
+  // let hours = document.getElementById(`hoursTxt`).value;
+  //let month = document.getElementById(`monthSlct`).value;
+  // let regular = document.getElementById(`regularRdo`);
+  // let faculty = document.getElementById(`facultyRdo`);
+
+  let regularfaculty = isRegularFacultyChecked();
+  // const domRadios = document.querySelectorAll('[name="radioOnOrOff"]');
+//  console.log(regularfaculty.value);
+result.innerHTML = 
+// `Number :${number} Name :${name} Dept :${department} Hours ${hours} Month :${month} `;
+// document.getElementById(`resultArt`).innerHTML = number;
+`<table border=1>
+    <thead>
+        <tr>
+            <th colspan="4">Salary Slip</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Employee Number</td>
+            <td>${number}</td>
+            <td>Department</td>
+            <td>${department}</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>${name}</td>
+            <td>Employee Type</td>
+            <td>${regularfaculty.value}</td> 
+        </tr>
+        <tr>
+            <td colspan="2">Description</td>
+            <td>Earnings</td>
+            <td>Deduction</td>
+        </tr>
+        <tr>
+            <td colspan="2">Tax</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="2">Health Surcharge Fee</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>`;
+
+}
 
 // EXE
-calculate.addEventListener("click",isRegularFacultyChecked);
+calculate.addEventListener("click",calculateHealthSurcharge);

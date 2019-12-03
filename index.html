@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Assignment 2</title>
+    <title>Payroll System</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
@@ -27,7 +27,7 @@
                     <li><select name="department" id="departmentSlct">
                         <option value="0">Finance Department</option>
                         <option value="1">IT Department</option>
-                        <option value="3">Finance</option>
+                        <option value="3">Marketing</option>
                         <option value="4">Instructor</option>
                     </select></li>
                     <li><input type="text" id="hoursTxt"></li>
@@ -35,17 +35,17 @@
                     
                     <li><fieldset>
                         <label class="option">
-                            <input type="radio" name="radioOnOrOff" value="0" id="regularRdo" class="radio" checked>
+                            <input type="radio" name="radioOnOrOff" value="Regular" id="regularRdo" class="radio" checked>
                             <label for="regularRdo" class="radio-btn">(R) egular</label>
                         </label>                  
                         <label class="option">
-                          <input type="radio" name="radioOnOrOff" value="1" id="facultyRdo" class="radio"> 
+                          <input type="radio" name="radioOnOrOff" value="Faculty" id="facultyRdo" class="radio"> 
                           <span class="radio-btn">(F) aculty</span>
                         </label>
                       </fieldset></li>
                       <li id="macBacFld"></li>
                 </ul>
-                <input type="button" value="Calculate" id="calcBtn">
+                <input type="button" value="Generate Pay Slip" id="calcBtn">
                 <input type="reset" value="Clear">
             </form>
         </header>
