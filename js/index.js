@@ -52,7 +52,7 @@ function isRegularFacultyChecked(){
   if (regular.checked == true){
     console.log(`Regular is checked `);
   }else{
-    console.log(`Faculty is checked `);
+    // console.log(`Faculty is checked `);
   }
 }
 
@@ -100,11 +100,15 @@ function renderMasterBachelorRadio(){
     radioBtn.addEventListener('change', event => {
       console.log(event.target.value);
       if (event.target.value == "0") {
-      alert(`Bachelor is checked`);
+      // alert(`Bachelor is checked`);
+      let facultyBachelorNetSalary = calculateFacultyBachelorSalary();
+      console.log(`Bachelor Net Salary ${facultyBachelorNetSalary.toFixed(2)}`);
 
       } else {
   
-        alert(`Master is checked`);
+        // alert(`Master is checked`);
+        let facultyMasterNetSalary = calculateFacultyMasterSalary();
+        console.log (`Master Net Salary ${facultyMasterNetSalary.toFixed(2)}`);
 
       }
     })
@@ -157,22 +161,22 @@ function calculateRegularSalary(){
   }
 }
 
-function calculateFacultyMasterGrossSalary(){
+function calculateFacultyMasterSalary(){
   let hours = document.getElementById(`hoursTxt`).value; 
   let facultyMasterGrossSalary = masterAllowance + (masterSalaryPerHour * hours);
- 
-  console.log(facultyMasterGrossSalary);
+  let facultyMasterNetSalary = facultyMasterGrossSalary - (facultyMasterGrossSalary * incomeTax);
+  //console.log(facultyMasterNetSalary);
+  return facultyMasterNetSalary;
 }
 
-function calculateFacultyBachelorGrossSalary(){
+function calculateFacultyBachelorSalary(){
   let hours = document.getElementById(`hoursTxt`).value; 
   let facultyBachelorGrossSalary = bachelorAllowance + (bachelorSalaryPerHour * hours);
-  console.log(facultyBachelorGrossSalary);
+  let facultyBachelorNetSalary = facultyBachelorGrossSalary - (facultyBachelorGrossSalary * incomeTax);
+  // console.log(facultyBachelorNetSalary);
+  return facultyBachelorNetSalary;
 }
-
-
-
 
 
 // EXE
-calculate.addEventListener("click",calculateRegularSalary);
+calculate.addEventListener("click",isRegularFacultyChecked);
