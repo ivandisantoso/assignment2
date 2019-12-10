@@ -1,64 +1,43 @@
   // GLOBAL
 
-  // let result = document.getElementById(`resultArt`);
+ 
   let masterBachelor = document.getElementById(`macBacFld`);
-  // let number = document.getElementById(`numberTxt`).value;
-  //let name = document.getElementById(`nameTxt`).value;
-  //let department = document.getElementById(`departmentTxt`).value;
-  //let hours = document.getElementById(`hoursTxt`).value;
-  // let month = document.getElementById(`monthSlct`).value;
-  // let type = document.getElementById(`typeRdo`).value;
   let calculate = document.getElementById(`calcBtn`);
-  // let regular = document.getElementById(`regularRdo`);
-  // let faculty = document.getElementById(`facultyRdo`);
-  // let magister = document.getElementById(`masterRdo`);
-  // let bachelor = document.getElementById(`bachelorRdo`);
+
   const regularMinWorkHourMonthly = 160;
-  const regularAllowance = 2500;
+  const taxBreakPoint = 2500;
   const masterSalaryPerHour = 175;
   const bachelorSalaryPerHour = 100;
   const masterAllowance = 1500;
   const bachelorAllowance = 600; 
   const incomeTax = 0.25;
-  const healthFeePoint = 3000;
+  const healthFeeBreakPoint = 3000;
   const highHealthSurcharge = 33;
   const lowHealthSurcharge = 19.20;
 
 
   // FUNCTION
-function calculateWorkDay(){
-  let startWork = document.getElementById(`workStartDate`).value;
-  let endWork = document.getElementById(`workEndDate`).value;
-  let subDayStart = startWork.substring(8,10);
-  let subDayEnd = endWork.substring(8,10);
-  let subMonthStart = startWork.substring(5,7);
-  let subMonthEnd = endWork.substring(5,7);
-  let subYearStart = startWork.substring(0,4);
-  let subYearEnd = endWork.substring(0,4);
-
-  let numberWorkDays = subDayEnd-subDayStart;
-  let numberWorkMonths = subMonthEnd-subMonthStart;
-  let numberWorkYears = subYearEnd-subYearStart;
- 
-// console.log(`Working Days ${subYearStart} working days ${subYearEnd}`);
-  // if (test1>test2){
-  //   console.log(`>`);
-  // } else {
-  //   console.log(`<`);
-  // }
-}
-
 function isRegularFacultyChecked(){
   let regular = document.getElementById(`regularRdo`);
   let faculty = document.getElementById(`facultyRdo`);
 
   if (regular.checked == true){
     // console.log(`Regular is checked `);
-    // document.getElementById
-    return regular;
+    // calculateRegularSalary();
+    return {type: regular.value, grossSalary: calculateRegularSalary()};
   }else{
     // console.log(`Faculty is checked `);
-    return faculty;
+    return {type: faculty.value, grossSalary: calculateFacultySalary()};
+  }
+  // return facultyRegular;
+}
+
+function calculateFacultySalary() {
+  const qualificationCode = document.querySelector(`input[name="radioOnOrOff1"]:checked`).value;
+  if (qualificationCode == 0) {
+    return calculateFacultyBachelorGrossSalary();
+  } else {
+    return calculateFacultyMasterGrossSalary();
   }
 }
 
@@ -90,10 +69,11 @@ domRadios.forEach(radioBtn => {
 })
 
 function renderMasterBachelorRadio(){
+
   masterBachelor.innerHTML =
     `<fieldset id="macBacFld">
   <label class="option">
-      <input type="radio" name="radioOnOrOff1" value="0" id="bachelorRdo" class="radio">
+      <input type="radio" name="radioOnOrOff1" value="0" id="bachelorRdo" class="radio" checked>
       <label for="bachelorRdo" class="radio-btn">Bachelor</label>
   </label>                  
   <label class="option">
@@ -101,133 +81,164 @@ function renderMasterBachelorRadio(){
     <span class="radio-btn">Master</span>
   </label></fieldset>
 `;
-  const domRadios1 = document.querySelectorAll('[name="radioOnOrOff1"]')
-  domRadios1.forEach(radioBtn => {
-    radioBtn.addEventListener('change', event => {
-      console.log(event.target.value);
-      if (event.target.value == "0") {
-      // alert(`Bachelor is checked`);
-      let facultyBachelorNetSalary = calculateFacultyBachelorSalary();
-      console.log(`Bachelor Net Salary ${facultyBachelorNetSalary.toFixed(2)}`);
-
-      } else {
-  
-        // alert(`Master is checked`);
-        let facultyMasterNetSalary = calculateFacultyMasterSalary();
-        console.log (`Master Net Salary ${facultyMasterNetSalary.toFixed(2)}`);
-
-      }
-    })
-  })
 }
 
-function calculateRegularProrated(){
-  let regularProrated = regularAllowance / regularMinWorkHourMonthly;
-  // console.log(`Hourly Rate ${regularProrated}`); $15.625
-  return regularProrated;
+function calculateProratedRegular(){
+  let proratedRegular = taxBreakPoint / regularMinWorkHourMonthly;
+  // console.log(`Hourly Rate ${proratedRegular}`);
+  return proratedRegular;
+
+}
+
+function calculateProratedRegularGrossSalary(){
+  let hours = document.getElementById(`hoursTxt`).value;
+  // let result = document.getElementById(`resultArt`);
+  let proratedRegular = calculateProratedRegular();
+  // let allowance1 = generatePaySlip();
+ 
+  let proratedRegularSalary = (hours * proratedRegular);
+  // allowance1 = proratedRegularSalary;
+  return proratedRegularSalary;
+  console.log(`Regular prorated no tax ${proratedRegularSalary}`);
+  // return proratedRegularSalary;
+}
+
+
+
+function calculateDoubleProratedRegularGrossSalary(){
+  let hours = document.getElementById(`hoursTxt`).value;
+  let proratedRegular = calculateProratedRegular();
+  let proratedRegularSalary = calculateProratedRegularGrossSalary();
+  let doubleProratedRegularGrossSalary = ((hours-regularMinWorkHourMonthly) * proratedRegular) + proratedRegularSalary;
+  // let taxDoubleProratedRegularGrossSalary = doubleProratedRegularGrossSalary * incomeTax;
+  let taxDoubleProratedRegularGrossSalary = calculateTax(doubleProratedRegularGrossSalary);//doubleProratedRegularGrossSalary
+  if (doubleProratedRegularGrossSalary >= taxBreakPoint){
+    
+    console.log(`Regular Double Prorated Tax ${taxDoubleProratedRegularGrossSalary}`); //taxDoubleProratedRegularGrossSalary
+    return taxDoubleProratedRegularGrossSalary;
+  } else{
+
+    console.log(`Regular Double Prorated NO tax ${doubleProratedRegularGrossSalary}`);
+  }
 }
 
 function calculateRegularSalary(){
   let hours = document.getElementById(`hoursTxt`).value;
-  let regularProrated = calculateRegularProrated();
-  let regularGrossSalary = (hours * regularProrated);
-  let regularNetSalary = regularGrossSalary-(regularGrossSalary * incomeTax);
-  let doubleProratedRegularGrossSalary = (hours-regularMinWorkHourMonthly)*(regularProrated * 1)+regularGrossSalary; 
-  let doubleProratedRegularNetSalary = doubleProratedRegularGrossSalary-(doubleProratedRegularGrossSalary * incomeTax);
-
+  
   if(hours <= regularMinWorkHourMonthly){
-    console.log(` Gross Salary${regularGrossSalary.toFixed(2)} Net Salary ${regularNetSalary.toFixed(2)}`);
+    return calculateProratedRegularGrossSalary(); //ok
+    // return {tax: calculateTax(), grossSalary: calculateProratedRegularGrossSalary()};
+    //console.log(` Gross Salary${regularGrossSalary.toFixed(2)} Net Salary ${regularNetSalary.toFixed(2)}`);
   }else { 
-    console.log(` Gross Salary double prorated ${doubleProratedRegularGrossSalary.toFixed(2)} Net Salary double prorated ${doubleProratedRegularNetSalary.toFixed(2)}`);
+    return calculateDoubleProratedRegularGrossSalary();
+    // console.log(` Gross Salary double prorated ${doubleProratedRegularGrossSalary.toFixed(2)} Net Salary double prorated ${doubleProratedRegularNetSalary.toFixed(2)}`);
+    // return doubleProratedRegularGrossSalary;
   }
-  return doubleProratedRegularGrossSalary;
 }
 
-// function calculateTax(){
-//   let tax = 
-// }
-
-function calculateFacultyMasterSalary(){
+function calculateFacultyMasterGrossSalary(){
   let hours = document.getElementById(`hoursTxt`).value; 
   let facultyMasterGrossSalary = masterAllowance + (masterSalaryPerHour * hours);
-  let facultyMasterNetSalary = facultyMasterGrossSalary - (facultyMasterGrossSalary * incomeTax);
-  //console.log(facultyMasterNetSalary);
-  return facultyMasterNetSalary;
+  // let taxFacultyMasterGrossSalary = facultyMasterGrossSalary * incomeTax;
+  // console.log(`Master Gross Tax${taxFacultyMasterGrossSalary}`);
+  let taxFacultyMasterGrossSalary = calculateTax(facultyMasterGrossSalary);
+  if (facultyMasterGrossSalary >= taxBreakPoint){
+    console.log(`Master Pay with tax ${taxFacultyMasterGrossSalary}`);
+    return taxFacultyMasterGrossSalary;
+  } else{
+    console.log(`Master Pay no tax ${facultyMasterGrossSalary}`);
+    return facultyMasterGrossSalary;
+  }
+
 }
 
-function calculateFacultyBachelorSalary(){
+
+function calculateFacultyBachelorGrossSalary(){
   let hours = document.getElementById(`hoursTxt`).value; 
   let facultyBachelorGrossSalary = bachelorAllowance + (bachelorSalaryPerHour * hours);
-  let facultyBachelorNetSalary = facultyBachelorGrossSalary - (facultyBachelorGrossSalary * incomeTax);
-  // console.log(facultyBachelorNetSalary);
-  return facultyBachelorNetSalary, facultyBachelorGrossSalary;
+  // let taxFacultyBachelorGrossSalary = facultyBachelorGrossSalary * incomeTax;
+  // console.log(`Bachelor Gross ${facultyBachelorGrossSalary}`);
+  let taxFacultyBachelorGrossSalary = calculateTax(facultyBachelorGrossSalary);
+  if (facultyBachelorGrossSalary >= taxBreakPoint){
+    console.log(`Bachelor Pay with tax ${taxFacultyBachelorGrossSalary}`);
+    return taxFacultyBachelorGrossSalary;
+  } else{
+
+    console.log(`Bachelor Pay NO tax ${facultyBachelorGrossSalary}`);
+    return facultyBachelorGrossSalary;
+  }
 }
 
-function calculateHealthSurcharge(){
-  let doubleProratedRegularGrossSalary = calculateRegularSalary();
-  let facultyBachelorGrossSalary = calculateFacultyBachelorSalary();
-  let facultyMasterGrossSalary = calculateFacultyMasterSalary();
-  // let totalHighHealthSurcharge = highHealthSurcharge + 
-  console.log(`${facultyBachelorGrossSalary}`);
-  // if ((doubleProratedRegularGrossSalary > healthFeePoint) || (facultyBachelorGrossSalary > healthFeePoint) || (facultyMasterGrossSalary > healthFeePoint) ){
-  //   console.log(`Health surcharge fee ${highHealthSurcharge}`);
-  // }
+function calculateTax(grossSalary){
+  let tax = grossSalary * incomeTax;
+  let taxGrossSalary = grossSalary - tax
+  console.log(` Tax ${tax}`);
+  return taxGrossSalary;
 }
 
-function calculateSalary(){
+function calculateHealthSurcharge(taxGrossSalary){
+  // let taxDoubleProratedRegularGrossSalary = calculateDoubleProratedRegularGrossSalary();
+  // let taxFacultyBachelorGrossSalary = calculateFacultyBachelorGrossSalary();
+  // let taxFacultyMasterGrossSalary = calculateFacultyMasterGrossSalary();
+  let highHealthSurchargeFee = taxGrossSalary-highHealthSurcharge;
+  let lowHealthSurchargeFee = taxGrossSalary-lowHealthSurcharge;
+
+  if (taxGrossSalary > healthFeeBreakPoint){
+    console.log(`Net Salary ${highHealthSurchargeFee} after HIGH Health Surcharge`);
+    
+  }else{
+    console.log(`Net Salary ${lowHealthSurchargeFee} after LOW Health Surcharge`);
+    
+  }
+}
+
+function generatePaySlip(){
   let result = document.getElementById(`resultArt`);
   let number = document.getElementById(`numberTxt`).value;
   let name = document.getElementById(`nameTxt`).value;
   let department = document.getElementById(`departmentSlct`).value;
-  // let hours = document.getElementById(`hoursTxt`).value;
-  //let month = document.getElementById(`monthSlct`).value;
-  // let regular = document.getElementById(`regularRdo`);
-  // let faculty = document.getElementById(`facultyRdo`);
-
-  let regularfaculty = isRegularFacultyChecked();
-  // const domRadios = document.querySelectorAll('[name="radioOnOrOff"]');
-//  console.log(regularfaculty.value);
+  let hours = document.getElementById(`hoursTxt`).value;
+  let employeeType = isRegularFacultyChecked();
+ 
+  
+  // console.log(taxSalary);
 result.innerHTML = 
-// `Number :${number} Name :${name} Dept :${department} Hours ${hours} Month :${month} `;
-// document.getElementById(`resultArt`).innerHTML = number;
-`<table border=1>
-    <thead>
-        <tr>
-            <th colspan="4">Salary Slip</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Employee Number</td>
-            <td>${number}</td>
-            <td>Department</td>
-            <td>${department}</td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>${name}</td>
-            <td>Employee Type</td>
-            <td>${regularfaculty.value}</td> 
-        </tr>
-        <tr>
-            <td colspan="2">Description</td>
-            <td>Earnings</td>
-            <td>Deduction</td>
-        </tr>
-        <tr>
-            <td colspan="2">Tax</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td colspan="2">Health Surcharge Fee</td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>`;
+`<ul class="col1">
+<li><label>Employee Number</label></li>
+<li><label>Name</label></li>
+<li class="sub-header"><label>Description</label></li>
+<li><label>Number of hours worked</label></li>
+<li><label>Salary after tax</label></li>
+<li><label>Canadian Income Tax</label></li>
+<li><label>Health Surcharge Fee</label></li>
+<li><label>Net Salary</label></li>
+</ul>
+<ul class="col2">
+<li><label>&nbsp${number}</label></li>
+<li><label>${name}</label></li>
+</ul>
+<ul class="col3">
+<li><label>Department</label></li>
+<li><label>Employee Type</label></li>
+<li class="sub-header"><label>Earnings</label></li>
+<li><label>${hours} hours</label></li>
+<li><label>$ ${employeeType.grossSalary.toFixed(2)}</label></li>
+<li><label>&nbsp</label></li>
+<li><label>&nbsp</label></li>
+<li><label>$ net?</label></li>
+</ul>
+<ul class="col4">
+<li><label>${department}</label></li>
+<li><label>${employeeType.type}</label></li>
+<li class="sub-header"><label>Deduction</label></li>
+<li><label>&nbsp</label></li>
+<li><label>&nbsp</label></li>
+<li><label>$ tax?</label></li>
+<li><label>$ health surcharge?</label></li>
+<li><label>$ net?</label></li>
+</ul>`
 
 }
 
 // EXE
-calculate.addEventListener("click",calculateHealthSurcharge);
+calculate.addEventListener("click",generatePaySlip);

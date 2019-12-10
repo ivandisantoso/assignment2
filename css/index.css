@@ -1,28 +1,81 @@
-.employeefrm{
+*{
+  list-style: none;
+  
+}
+
+:root{
+  --primary: #ddd;
+  --dark: #333;
+  --light: #fff;
+}
+
+body{
+  background-color: var(--primary);
+}
+
+h1{
+  text-align: center;
+}
+
+.sub-header{
+
+
+font-weight: bold ;
+}
+
+.employee-frm{
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: left;
   justify-items: left;
+  width: 400px;
+
 }
 
-.employee{
-  list-style: none;
+.employee-lbl{
+min-width: 150px;
+width: 100%;
+}
+
+.employee-input{
+width: 100%;
+min-width: 200px;
 }
 
 .radio-btn {
-  /* display: inline-block;
-  font: 1.25em georgia, serif;
-  background-color: darkslateblue;
-  color: white;
-  padding: 0.25em 0.5em;
-  border-radius: 0.125em;
-  text-shadow: 1px 1px black;
-  box-shadow: 0.125em 0.125em 0 slateblue; */
-  list-style: none;
+
 }
-.radio:checked + .radio-btn {
-  /* box-shadow: none;
-  background-color: slateblue;
-  text-shadow: none;
-  border: 2px solid black; */
+.btn{
+  display: flex;
+
+}
+
+
+.title{
+  background-color:var(--light);
+}
+
+.result-art{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.col1{
+  width: 175px;
+}
+
+.col2{
+min-width: 100px;
+max-width: fit-content;
+}
+
+.col3{
+  width: 125px
+}
+
+.col4{
+  width: 150px
+}
+footer{
+  background-color: var(--dark);
 }
